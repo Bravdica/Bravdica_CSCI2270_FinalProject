@@ -21,6 +21,7 @@ None so far
 
 OPEN ISSUES/BUGS:
 Everytime the program is opened after the first time it is run, I get a seg fault because it forgets where the head of the linked list is
+Probably even more issues once I fix that problem
 I want to add a function that remembers what each account/user has rented in the past and be able to display those movies
 
 

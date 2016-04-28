@@ -5,7 +5,7 @@
 struct User{
     std::string username;
     std::string pass;
-    std::string pastMovies;
+    int pos;
     User *next;
 };
 
@@ -61,8 +61,8 @@ class MovieTree
         MovieNode* search(std::string title);
         MovieNode* treeMinimum(MovieNode *node);
         MovieNode *root;
-        User *head;
-        User *tail;
+        User* head;
+        User* tail;
 };
 
 #endif // MOVIETREE_H

@@ -68,12 +68,13 @@ int main(int argc, char* argv[]){
             string newUser;
             string newPass;
             cout << "Creating an account:" << endl << endl;
-            cout << "Please enter a username: " << endl;
+            cout << "Please enter a username (no spaces): " << endl;
             getline(cin,newUser);
             cout <<"Please enter a password: " << endl;
             getline(cin,newPass);
             tree.addUser(newUser, newPass);
-
+            cout << "Congratulations! You have successfully created an account!" << endl;
+            break;
         }
     }
 

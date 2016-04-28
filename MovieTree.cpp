@@ -13,6 +13,20 @@ MovieTree::MovieTree()
 {
     //ctor
     root=NULL;
+
+    ifstream in("Users.txt"); //Checks if file is empty so it does not overwrite
+    if(in.is_open()){
+        in.seekg(0,std::ios::end);
+        size_t size = in.tellg();
+        if( size == 0){
+            head = new User;
+            head->username = "Master";
+            head->pass = "Master";
+            head->pos = 1;
+            head->next = NULL;
+            cout << "initial" << endl;
+        }
+    }
 }
 
 MovieTree::~MovieTree()
@@ -224,25 +238,27 @@ MovieNode* MovieTree::treeMinimum(MovieNode *node){
 }
 
 void MovieTree::buildLogins(){
-    head=new User;
-    head->username="Master";
-    head->pass="Master";
-    head->pastMovies="";
-    head->next=NULL;
+    string users[]= {"Master", "Maintenance"};
+    string passwords[]={"Master", "Maintenance pass"};
     User* current=head;
-    User *temp=new User;
-    temp->username="Maintenance";
-    temp->pass="Maintenance pass";
-    temp->pastMovies="";
-    temp->next=NULL;
-    tail=temp;
-    current->next=temp;
+    int i = 1;
+    while(i < 2){
+        User *temp = new User;
+        temp->username = users[i];
+        temp->pass = passwords[i];
+        temp->pos = 0;
+        temp->next = NULL;
+        current->next = temp;
+        current = current->next;
+        i++;
+    }
+    User *temp = head;
 
     ofstream myfile("Users.txt");
     if(myfile.is_open()){
-        while(current!=NULL){
-            myfile << current->username << "; " << current->pass << "; " << current->pastMovies;
-            current=current->next;
+        while(temp!=NULL){
+            myfile << temp->username << "; " << temp->pass << "; " << temp->pos;
+            temp=temp->next;
             myfile << char(13) << endl;
         }
         myfile.close();
@@ -267,20 +283,24 @@ bool MovieTree::check(std::string username, std::string pass){
 }
 
 void MovieTree::addUser(std::string username, std::string pass){
+    User* test = head;
     User* temp=new User;
+    User* New=head;
     temp->username=username;
     temp->pass=pass;
-    temp->pastMovies="";
-    tail->next=temp;
-    temp=tail;
+    temp->pos=0;
+    while(New->next!=NULL){
+        New=New->next;
+    }
+    New->next=temp;
     temp->next=NULL;
+    std::ofstream out;
+    out.open("Users.txt", std::ios::app);
+    out << temp->username << "; " << temp->pass << "; " << temp->pos;
+    out << char(13) << endl;
 
-    User* current=head;
-    User *temp=new User;
-    temp->username="Maintenance";
-    temp->pass="Maintenance pass";
-    temp->pastMovies="";
-    tail=temp;
-    current->next=temp;
-    temp->next=NULL;
+    while(test!= NULL){
+        cout << test->username << test->pass << endl;
+        test=test->next;
+    }
 }
